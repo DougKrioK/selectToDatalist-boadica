@@ -1,26 +1,10 @@
-//const selects = $(`select`, `#div-filtros`)
-const selects = $(`#modelo`, `#div-filtros`)
+const selects = document.querySelector('#modelo');
+const options = document.querySelectorAll('#modelo option');
+const label = selects.parentElement;
+let optionDatalist = '';
 
-selects.each((index, el) => {
-	let indice = index;
-	const $el = $(el);
-	const $options = $(`option`, $el);
-	const label = $el.parent();
+for (var i = 1; i < options.length; i++) {
+	optionDatalist = `${optionDatalist} <option value="${options[i].value}">${options[i].text}</option>`;
+}
 
-	let options = ``;
-
-	$options.each((index, el) => {
-		options = options + `<option value="${el.value}">${el.text}</option>`;
-	});
-
-	$el.remove();
-	let datalist = $(`<datalist>`).attr('id', 'datalist'+indice).append(options);
-	let input = $(`<input>`).attr({
-		list: 'datalist'+indice,
-		id: 'modelo',
-		name: 'modelo',
-		autocomplete:'off'
-	}).css('width', '250px');;
-	label.append(input).append(datalist);
-
-});
+label.innerHTML = `\n Modelo: \n <input id="modelo" list="datalist-select" name="modelo" placeholder="Selecione um modelo" autocomplete="off" style="width:250px"><datalist id="datalist-select">${optionDatalist}</datalist>`;
